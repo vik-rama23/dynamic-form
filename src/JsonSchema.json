@@ -1,0 +1,82 @@
+{
+    "formTitle": "User Registration Form",
+    "formDescription": "Please fill out the form below to register",
+    "fields": [
+        {
+            "id": "username",
+            "type": "text",
+            "label": "Username",
+            "placeholder": "Enter your username",
+            "required": true,
+            "validation": {
+                "minLength": 3,
+                "maxLength": 20
+            }
+        },
+        {
+            "id": "email",
+            "type": "email",
+            "label": "Email",
+            "placeholder": "Enter your email",
+            "required": true,
+            "validation": {
+                "pattern": "^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$",
+                "message": "Please enter a valid email address"
+            }
+        },
+        {
+            "id": "password",
+            "type": "password",
+            "label": "Password",
+            "placeholder": "Enter a secure password",
+            "required": true,
+            "validation": {
+                "minLength": 8,
+                "message": "Password must be at least 8 characters long"
+            }
+        },
+        {
+            "id": "dob",
+            "type": "date",
+            "label": "Date of Birth",
+            "placeholder": "Enter a secure password",
+            "required": false
+        },
+        {
+            "id": "gender",
+            "type": "radio",
+            "label": "Gender",
+            "required": true,
+            "options": [
+                {"value":"male", "label":"male"},
+                {"value":"female", "label":"female"},
+                {"value":"other", "label":"other"}
+            ]
+        },
+        {
+            "id": "hobbies",
+            "type": "checkbox",
+            "label": "Hobbies",
+            "required": false,
+            "options": [
+                {"value":"reading", "label":"Reading"},
+                {"value":"writing", "label":"Writing"},
+                {"value":"painting", "label":"Painting"},
+                {"value":"cooking", "label":"Cooking"}
+            ]
+        },
+        {
+            "id": "bio",
+            "type": "textarea",
+            "label": "short Bio",
+            "placeholder": "Tell us about yourself",
+            "required": false
+        },
+        {
+            "id": "profilePicture",
+            "type": "file",
+            "label": "Upload Profile Picture",
+            "required": false
+        }
+    ]
+}
