@@ -15,6 +15,8 @@ This project is a React application that dynamically renders a user registration
    git clone <repository-url>
    cd dynamic-form-ui
 
+   switch to main branch
+
 2. **Install dependencies:**
     npm install --legacy-peer-deps
 
