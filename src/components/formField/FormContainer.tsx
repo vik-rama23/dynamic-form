@@ -30,9 +30,10 @@ interface FormContainerProps {
   formData: { [key: string]: any };
   handleChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => void;
   handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+  previewProfilePic?: string;
 }
 
-const FormContainer: React.FC<FormContainerProps> = ({ formConfig, formData, handleChange, handleSubmit }) => {
+const FormContainer: React.FC<FormContainerProps> = ({ formConfig, formData, handleChange, handleSubmit, previewProfilePic }) => {
   return (
     <StyledFormContainer>
       <div className="form-container">
@@ -42,7 +43,7 @@ const FormContainer: React.FC<FormContainerProps> = ({ formConfig, formData, han
           {formConfig.fields.map((field) => (
             <div key={field.id}>
               <label className="form-container_label">{field.label}</label>
-              <FormField field={field} formData={formData} handleChange={handleChange} />
+              <FormField field={field} formData={formData} handleChange={handleChange} previewProfilePic = {previewProfilePic} />
             </div>
           ))}
           <div className="button-container">
@@ -58,10 +59,9 @@ const FormContainer: React.FC<FormContainerProps> = ({ formConfig, formData, han
 
 const StyledFormContainer = styled.div`
 display: flex;
-justify-content: flex-start; 
 
 .form-container {
- width: 50%;
+ width: 80%;
   background: #e6e6e6;
   padding: 4%;
 }

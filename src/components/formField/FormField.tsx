@@ -21,9 +21,11 @@ interface FormFieldProps {
     field: Field;
     formData: { [key: string]: any };
     handleChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => void;
+    previewProfilePic?: string;
 }
 
-const FormField: React.FC<FormFieldProps> = ({ field, formData, handleChange }) => {
+const FormField: React.FC<FormFieldProps> = ({ field, formData, handleChange ,previewProfilePic}) => {
+    console.log(previewProfilePic);
     switch (field.type) {
         case "text":
         case "email":
@@ -111,9 +113,9 @@ const FormField: React.FC<FormFieldProps> = ({ field, formData, handleChange }) 
                         onChange={handleChange}
                         className={field.type + "-input"}
                     />
-                    {formData[`${field.id}Preview`] && (
+                    {previewProfilePic && (
                         <img
-                            src={formData[`${field.id}Preview`]}
+                            src={previewProfilePic}
                             alt="Profile Preview"
                             className="profile-preview"
                         />

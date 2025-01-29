@@ -6,7 +6,9 @@ import styled from "styled-components";
 const DynamicForm: React.FC = () => {
   const [formData, setFormData] = useState<{ [key: string]: any }>({});
   const [submittedData, setSubmittedData] = useState<{ [key: string]: any } | null>(null);
+  const [previewProfilePic, setPreviewProfilePic] = useState<string | undefined>(undefined);
 
+  //Handle change in form fields using formdata state and setFormData function to update the state
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value, type } = e.target;
     const checked = (e.target as HTMLInputElement).type === "checkbox" ? (e.target as HTMLInputElement).checked : undefined;
@@ -23,11 +25,16 @@ const DynamicForm: React.FC = () => {
         reader.onloadend = () => {
           setFormData({
             ...formData,
-            [name]: file,
-            [`${name}Preview`]: reader.result,
+            [name]: file.name,
           });
+          console.log(reader.result);
+          setPreviewProfilePic(reader?.result as string);
         };
         reader.readAsDataURL(file);
+        setFormData({
+          ...formData,
+          [`${name}FileName`]: file.name, // Store the file name
+        });
       }
     } else if (type === "checkbox") {
       const updatedCheckboxes = formData[name] ? [...formData[name]] : [];
@@ -55,13 +62,13 @@ const DynamicForm: React.FC = () => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const dataToSubmit = { ...formData };
-    // delete dataToSubmit.password;
     setSubmittedData(dataToSubmit);
   };
 
+  //handling jsons schema export
   const handleExport = () => {
-    if (submittedData) {
-      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(submittedData, null, 2));
+    if (formConfig) {
+      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(formConfig, null, 2));
       const downloadAnchorNode = document.createElement('a');
       downloadAnchorNode.setAttribute("href", dataStr);
       downloadAnchorNode.setAttribute("download", "submitted_data.json");
@@ -81,6 +88,7 @@ const DynamicForm: React.FC = () => {
           formData={formData}
           handleChange={handleChange}
           handleSubmit={handleSubmit}
+          previewProfilePic={previewProfilePic}
         />
       </div>
       <div className="submitted-data-section">
@@ -88,7 +96,7 @@ const DynamicForm: React.FC = () => {
         {submittedData && (
           <div>
             <h3>Submitted Data</h3>
-            <pre>{JSON.stringify(submittedData, null, 2)}</pre>
+            <pre>{submittedData ? JSON.stringify(submittedData, null, 2) : "No data submitted yet"}</pre>
             <button onClick={handleExport}>Export JSON</button>
           </div>
         )}
@@ -100,12 +108,11 @@ const DynamicForm: React.FC = () => {
 const StyledFormContainer = styled.div`
  display: flex;
   .form-section {
-    flex: 1;
+   width: 50%;
   }
 
   .submitted-data-section {
-    flex: 1;
-    max-width: 400px;
+    max-width: 300px;
   }
 
 `
